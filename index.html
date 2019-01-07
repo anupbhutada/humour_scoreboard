@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leader Board</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link type="text/css" rel="stylesheet" href="style.css"  media="screen,projection"/>
+
+</head>
+<body>
+	<div class="container">
+		<div class="scoreboard">
+			<table class="responsive-table">
+		        <thead>
+		          <tr>
+		              <th>Rank</th>
+		              <th>Name</th>
+		              <th>Score</th>
+		          </tr>
+		        </thead>
+
+		        <tbody>
+		          <!-- <tr>
+		            <td>1</td>
+		            <td>Anup</td>
+		            <td>100</td>
+		          </tr>
+		          <tr>
+		            <td>2</td>
+		            <td>Kabir</td>
+		            <td>50</td>
+		          </tr>
+		          <tr>
+		            <td>3</td>
+		            <td>Satyaki</td>
+		            <td>-100</td>
+		          </tr>
+		          <tr>
+		            <td>4</td>
+		            <td>Kanish</td>
+		            <td>-100</td>
+		          </tr> -->
+		        </tbody>
+		    </table>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script type="text/javascript">
+		fetch('scores.json')
+		  .then(response => response.json())
+		  .then(
+		  	function(data) {
+		  		// $(".container").append("<p>" + data + "</p>");
+		  		var sorted_names = [];
+		  		var keys = []
+		  		for (var k in data) {
+		  			keys.push(k);
+		  			// console.log(k);
+		  		}
+		  		var ind = 0;
+		  		while (ind < keys.length) {
+		  			var m = Number.MIN_SAFE_INTEGER;
+		  			var m_i = -1;
+		  			for (var i = ind; i < keys.length; i++) {
+		  				if (m < data[keys[i]]) {
+		  					m = data[keys[i]];
+		  					m_i = i;
+		  				}
+		  			}
+	  				// console.log(keys + m);
+	  				var temp = keys[ind];
+	  				keys[ind] = keys[m_i];
+	  				keys[m_i] = temp;
+	  				ind = ind + 1;
+		  		};
+		  		for (var i = 0; i < keys.length; i++) {
+		  			$(".scoreboard table tbody").append("<tr><td>"+ (i + 1) +"</td><td>"+ keys[i] +"</td><td>"+ data[keys[i]] +"</td></tr>")
+		  		}
+		  	})
+
+		// var data = $.csv.toObjects(csv);
+	</script>
+
+</body>
+</html>
